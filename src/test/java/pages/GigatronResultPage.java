@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class GigatronResultPage extends BaseHelper
 {
+
     WebDriver driver;
 
     public GigatronResultPage(WebDriver driver)

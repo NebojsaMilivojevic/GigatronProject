@@ -19,6 +19,7 @@ public class GigatronHomePage extends BaseHelper
     WebElement magnifierIcon;
 
     WebDriver driver;
+
     public GigatronHomePage (WebDriver driver)
     {
         this.driver = driver;
@@ -46,20 +47,14 @@ public class GigatronHomePage extends BaseHelper
     private void enterTermInSearchBox (String term)
     {
         wdWait.until(ExpectedConditions.visibilityOf(searchBox));
-
-        // WebElement searchBox = driver.findElement(By.id("searchbox"));
-        //js.executeScript("arguments[0].click();", searchBox);
         searchBox.click();
-        //searchBox.clear();
-        // WebElement searchField = driver.findElement(By.className("search-container"));
-        //js.executeScript("arguments[0].setAttribute();",term,searchBox);
         searchBox.sendKeys(term);
-        // sada krece:  /html/body/header/div/nav/div/div/div/div/div/ul/li[4]/ul/li[4]/ul[2]/li[6]     preko hoverborda
+
     }
 
     private void clickOnMagnifierIcon ()
     {
-        clickOnElement(magnifierIcon); // ovo mi je metoda iz BaseHelper-a umesto magnifierIcom.click()
+        clickOnElement(magnifierIcon);
     }
 
 }

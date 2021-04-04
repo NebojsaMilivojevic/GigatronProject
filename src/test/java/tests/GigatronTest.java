@@ -1,19 +1,19 @@
 package tests;
 
+
+import org.junit.Assert;
 import org.junit.Test;
 import pages.*;
-
 import java.util.Collections;
 import java.util.List;
 
 public class GigatronTest extends BaseTest
 {
     final String itemName1 = "ASUS Gaming monitor TUF Gaming 27 VA - VG27VQ";
-    final String itemName2 = "ASUS nVidia GeForce GT 1030 Phoenix OC 2GB GDDR5 64bit - PH-GT1030-O2G";
-    final String itemName3 = "ASUS nVidia GeForce GT 1030 2GB GDDR5 64bit - GT1030-2G-BRK";
 
     @Test
-    public void searchTest () throws InterruptedException {
+    public void firstTest () throws InterruptedException
+    {
 
         GigatronHomePage homePage = new GigatronHomePage(driver);
         homePage.gigatronSearch(itemName1);
@@ -24,6 +24,14 @@ public class GigatronTest extends BaseTest
         GigatronItemPage itemPage = new GigatronItemPage(driver);
         itemPage.addItemToBasket();
 
+        Assert.assertTrue("Error !!!", itemPage.getIconBasketText().contains("1"));
+
+        Thread.sleep(4000); // added for presentation
+    }
+
+    @Test
+    public void secondTest () throws InterruptedException
+    {
         GigatronSelectItemsPage selectItemsPage = new GigatronSelectItemsPage(driver);
         selectItemsPage.selectGroupOfItems();
 
@@ -31,13 +39,30 @@ public class GigatronTest extends BaseTest
         filtersPage.filterSelectedItems();
 
         GigatronFiltersResultsPage filtersResultsPage = new GigatronFiltersResultsPage(driver);
-        filtersResultsPage.chooseItem(itemName2);
 
+        Assert.assertEquals(filtersPage.getFilterAsusName(),filtersResultsPage.getFilterNamePlusTextNumber());
+
+        Thread.sleep(4000); // added for presentation
+    }
+
+    @Test
+    public void thirdTest () throws InterruptedException
+    {
+        GigatronSelectItemsPage selectItemsPage = new GigatronSelectItemsPage(driver);
+        selectItemsPage.selectGroupOfItems();
+
+        GigatronFiltersPage filtersPage = new GigatronFiltersPage(driver);
+        filtersPage.filterSelectedItems();
+
+        GigatronFiltersResultsPage filtersResultsPage = new GigatronFiltersResultsPage(driver);
+        filtersResultsPage.chooseRandomItem(); // choose first item
+
+        GigatronItemPage itemPage = new GigatronItemPage(driver);
         itemPage.addItemToBasket();
 
-        navigateBack();
+        itemPage.navigateBack();
 
-        filtersResultsPage.chooseItem(itemName3);
+        filtersResultsPage.chooseRandomItem(); // choose second item
 
         itemPage.addItemToBasket();
 
@@ -49,6 +74,25 @@ public class GigatronTest extends BaseTest
 
         Collections.sort(chosenItems);
         Collections.sort(basketItems);
-        Thread.sleep(4000);
+
+        for(int i =0; i<basketPage.getSizeOfBasket(); i++)
+        {
+            Item chosenItem = chosenItems.get(i);
+            Item basketItem = basketItems.get(i);
+            System.out.println("Chosen item is: "+ chosenItem.getName());
+            System.out.println("Basket item is: " + basketItem.getName());
+            Assert.assertTrue("Names are not equal! ",basketItem.getName().contains(chosenItem.getName()));
+        }
+
+        double chosenItemsSum = itemPage.getSumChooseItems();
+        double basketItemsSum = basketPage.getSumBasketItems();
+        double totalPrice = basketPage.getTotalPrice();
+        boolean allEquals = false;
+        if (Double.compare(chosenItemsSum, basketItemsSum) == 0 && Double.compare(basketItemsSum, totalPrice) == 0)
+            allEquals = true;
+
+        Assert.assertTrue(allEquals);
+
+        Thread.sleep(4000); // added for presentation
     }
 }

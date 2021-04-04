@@ -21,12 +21,10 @@ public class GigatronFiltersPage extends BaseHelper
 
     public void filterSelectedItems ()
     {
-        filterAsus();
-        filterMagistralaMemorije();
-
+        clickOnFilterAsus();
     }
 
-    private void filterAsus ()
+    private void clickOnFilterAsus ()
     {
         wdWait.until(ExpectedConditions.presenceOfElementLocated(By.id("brand")));
         List<WebElement> brands = driver.findElements(By.className("force-display"));
@@ -34,15 +32,17 @@ public class GigatronFiltersPage extends BaseHelper
         brandAsus.click();
     }
 
-    private void filterMagistralaMemorije ()
+    /*
+    * Method for assert which return filter name and item number in brackets
+    */
+    public String getFilterAsusName ()
     {
-        WebElement memories = driver.findElement(By.id("filters-Magistrala memorije"));
-        List<WebElement> filters = memories.findElements(By.className("filter"));
-        WebElement filter64bit = filters.get(1);
-        js.executeScript("arguments[0].scrollIntoView;",filter64bit);
-        wdWait.until(ExpectedConditions.visibilityOf(filter64bit));
-        js.executeScript("arguments[0].click();", filter64bit);
-
+        wdWait.until(ExpectedConditions.presenceOfElementLocated(By.id("brand")));
+        List<WebElement> brands = driver.findElements(By.className("force-display"));
+        WebElement brandAsus = brands.get(0);
+        String brandAsusFilter = brandAsus.getText();
+        brandAsusFilter = brandAsusFilter.replace("\n","").replace("(","").replace(")","").trim();
+        System.out.println("BrandAsusFilter after replace: " + brandAsusFilter);
+        return brandAsusFilter.toLowerCase();
     }
-
 }

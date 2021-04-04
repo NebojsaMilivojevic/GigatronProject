@@ -20,7 +20,6 @@ public class BaseHelper
 
     public void navigateBack ()
     {
-        //wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("product-title")));
         driver.navigate().back();
     }
 }

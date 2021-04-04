@@ -4,6 +4,7 @@ import helpers.BaseHelper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
@@ -12,8 +13,14 @@ import java.util.List;
 
 public class GigatronItemPage extends BaseHelper
 {
+    @FindBy(className = "btnTxt")
+    WebElement addtoBasketButton;
+
     WebDriver driver;
+
     private List<Item> chosenItems = new ArrayList<Item>();
+
+    double sumChoosenItems;
 
     public GigatronItemPage (WebDriver driver)
     {
@@ -27,25 +34,23 @@ public class GigatronItemPage extends BaseHelper
         nazadNaPretraguButton();
     }
 
-    private void addToBasketButton()  // 1. metoda je public zato sto se poziva i u drugim klasama // 2. mislim da treba biti ipak private!!!!!
+    private void addToBasketButton()
     {
-        wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("btnTxt"))); // prebaciti u @FindBy
-        WebElement addtoBasketButton = driver.findElement(By.className("btnTxt"));
+        wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("buy-holder")));
+        wdWait.until(ExpectedConditions.visibilityOf(addtoBasketButton));
         createListOfChosenItems();
         addtoBasketButton.click();
     }
 
     private String getItemName ()
     {
-        wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("product-title")));  // mozda prebaciti u @FindBy
-        WebElement item = driver.findElement(By.className("product-title"));  // element u elementu
+        wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("product-title")));
+        WebElement item = driver.findElement(By.className("product-title"));
         WebElement itemName = item.findElement(By.xpath("h1[1]"));   // element u elementu
-        String chosenItemName = itemName.getText();                  // element u elementu
+        String chosenItemName = itemName.getText();
         System.out.println("Chosen item name is: " + chosenItemName);
-        /*WebElement imgAlt = driver.findElement(By.xpath("/html/body/div[1]/div/div/div[2]/div/div/div/div/div/div/div/div[2]/div[2]/div[1]/div[1]/div[3]/div/div/div/img"));
-        String alt = imgAlt.getAttribute("alt");
-        System.out.println("Img alt attribute is: " + alt);*/
         String titleName = driver.getTitle();
+        System.out.println("Title name is: " + titleName);
         String[] arr = titleName.split(chosenItemName);
         String componentText = arr[0].toLowerCase();
         return componentText + chosenItemName.toLowerCase();
@@ -53,18 +58,19 @@ public class GigatronItemPage extends BaseHelper
 
     private double getItemPrice ()
     {
-        WebElement priceHolder = driver.findElement(By.className("price"));   // mozda prebaciti u @FindBy
+        WebElement priceHolder = driver.findElement(By.className("price"));
         String chosenItemPrice = priceHolder.getText();
         chosenItemPrice = chosenItemPrice.substring(0,chosenItemPrice.length()-3);
         chosenItemPrice = chosenItemPrice.replace(".","");
         double priceOfChosenItem = Double.parseDouble(chosenItemPrice);
         System.out.println("Chosen item price is: " + priceOfChosenItem);
+        sumChoosenItems += priceOfChosenItem;
         return priceOfChosenItem;
     }
 
-
-    //Creates a list of chosen items
-
+    /*
+    * Creates a list of chosen items
+    */
     private void createListOfChosenItems()
     {
         Item item = new Item();
@@ -74,9 +80,9 @@ public class GigatronItemPage extends BaseHelper
         chosenItems.add(item);
     }
 
-
-   //  Return a list of chosen items
-
+    /*
+    *  Return a list of chosen items
+    */
     public List<Item> getChosenItems()
     {
         return chosenItems;
@@ -84,14 +90,40 @@ public class GigatronItemPage extends BaseHelper
 
     private void nazadNaPretraguButton ()
     {
+        wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("sw-content")));
+        WebElement messageElement = driver.findElement(By.className("sw-content"));
+        WebElement messageH4 = messageElement.findElement(By.xpath("h4[1]"));
+        wdWait.until(ExpectedConditions.textToBePresentInElement(messageH4,"Proizvod je dodat u korpu"));
+        String message = messageH4.getText();
+        System.out.println("Da li se pojavila poruka: "+ message);
         wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("shop-buttons")));
+        wdWait.until(ExpectedConditions.visibilityOfElementLocated(By.className("white")));
         WebElement nazadNaPretragu = driver.findElement(By.className("white"));
+
+        wdWait.until(ExpectedConditions.textToBePresentInElementLocated(By.className("qty_cart_icon_number"),"1"));
+        wdWait.until(ExpectedConditions.textToBePresentInElementLocated(By.className("btnTxt"),"U korpi"));
+
         js.executeScript("arguments[0].click();", nazadNaPretragu);
     }
 
     public void navigateBack ()
     {
-        wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("product-title")));  // mozda prebaciti u @FindBy
+        wdWait.until(ExpectedConditions.elementToBeClickable(By.className("icon-link")));
+        wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("product-title")));
         driver.navigate().back();
+    }
+
+    public String getIconBasketText()
+    {
+        wdWait.until(ExpectedConditions.invisibilityOfElementWithText(By.className("icon-link"),""));
+        WebElement iconBasket = driver.findElement(By.className("icon-link"));
+        System.out.println("Number of items in basket on basket icon is: " + iconBasket.getText());
+        return iconBasket.getText();
+    }
+
+    public double getSumChooseItems ()
+    {
+        System.out.println("Sum of chosen items is: " + sumChoosenItems);
+        return sumChoosenItems;
     }
 }

@@ -28,7 +28,7 @@ public class Item implements Comparable<Item>
 
     public int compareTo(Item item)
     {
-        return (int) (this.getPrice()-item.getPrice()); //this.getName().compareTo(item.getName());//
+        return (this.getName().compareTo(item.getName())); //this.getPrice()-item.getPrice();//this.getName().compareTo(item.getName());
     }
 }
 

@@ -6,7 +6,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +13,8 @@ public class GigatronBasketPage extends BaseHelper
 {
     WebDriver driver;
     private List<Item> basketItems = new ArrayList<Item>();
+
+    double sumBasketItems;
 
     public GigatronBasketPage (WebDriver driver)
     {
@@ -30,10 +31,12 @@ public class GigatronBasketPage extends BaseHelper
 
     private void clickOnIconBasket()
     {
-        wdWait.until(ExpectedConditions.invisibilityOfElementWithText(By.className("icon-link"),"2"));
-        WebElement iconBasket = driver.findElement(By.className("icon-link"));
-        System.out.println("Number of items in basket on basket icon is: " + iconBasket.getText());
-        iconBasket.click();
+
+        wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("fb-logo")));
+        wdWait.until(ExpectedConditions.invisibilityOfElementWithText(By.className("icon-number"),"1"));
+        WebElement iconBasket = driver.findElement(By.className("icon"));
+        js.executeScript("arguments[0].scrollIntoView();", iconBasket);
+        js.executeScript("arguments[0].click();", iconBasket);//iconBasket.click();
     }
 
     private void clickOnContinueLikeUnregisteredBuyerButton()
@@ -45,7 +48,7 @@ public class GigatronBasketPage extends BaseHelper
 
     private String getBasketItemName(int i)
     {
-        wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("cart-items")));   // mozda i za @FindBy
+        wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("cart-items")));
         List<WebElement> itemNames = driver.findElements(By.className("titleItemLink"));
         WebElement itemName = itemNames.get(i);
         String itemNameFromBasket = itemName.getText();
@@ -55,22 +58,22 @@ public class GigatronBasketPage extends BaseHelper
 
     private double getBasketItemPrice(int i)
     {
-        List<WebElement> itemPrices = driver.findElements(By.className("total-item-cart"));  // mozda i za @FindBy
+        List<WebElement> itemPrices = driver.findElements(By.className("total-item-cart"));
         WebElement totalPrice = itemPrices.get(i);
         String itemPriceFromBasket = totalPrice.getText();
         System.out.println("Item price from basket is: " + itemPriceFromBasket);
-        itemPriceFromBasket = itemPriceFromBasket.substring(13,19); // ovako ne moze ako cena nije u desetini hiljada dinara
+        itemPriceFromBasket = itemPriceFromBasket.substring(13,itemPriceFromBasket.length()-7);
         itemPriceFromBasket = itemPriceFromBasket.replace(".","").trim();
 
-      //  System.out.println("Item price after substring, and replace: " + itemPriceFromBasket);
         double itemPrice = Double.parseDouble(itemPriceFromBasket);
-     //   System.out.println("Item price after substring, replace and parseDouble is:" + itemPrice);
+     // System.out.println("Item price after substring, replace and parseDouble is:" + itemPrice);
+        sumBasketItems += itemPrice;
         return itemPrice;
     }
 
-
-     //Create a list of items in basket
-
+     /*
+     * Create a list of items in basket
+      */
     private void createListOfBasketItems ()
     {
         int turn = getSizeOfBasket();
@@ -85,10 +88,10 @@ public class GigatronBasketPage extends BaseHelper
     }
 
 
-    //Returns the size of basket
-
-
-    private int getSizeOfBasket ()
+    /*
+     * Returns the size of basket for creating list of basket items (turns!!!)
+     */
+    public int getSizeOfBasket ()
     {
         wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("cart-item-row")));
         List<WebElement> itemRows = driver.findElements(By.className("cart-item-row"));
@@ -98,11 +101,30 @@ public class GigatronBasketPage extends BaseHelper
     }
 
 
-    //Return a list of items in basket
-
+    /*
+     * Return a list of items in basket
+     */
     public List<Item> getBasketItems ()
     {
         return basketItems;
+    }
+
+    public double getSumBasketItems ()
+    {
+        System.out.println("Sum of basket items is: " + sumBasketItems);
+        return sumBasketItems;
+    }
+
+    public double getTotalPrice ()
+    {
+        wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("final-price")));
+        WebElement finalPrice = driver.findElement(By.className("final-price"));
+        String totalPriceText = finalPrice.getText();
+        totalPriceText = totalPriceText.substring(0,totalPriceText.length()-7);
+        totalPriceText = totalPriceText.replace(".","").trim();
+        double totalPrice = Double.parseDouble(totalPriceText);
+        System.out.println("Total price after substring and replace is: " + totalPrice);
+        return totalPrice;
     }
 
 }
