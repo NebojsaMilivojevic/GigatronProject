@@ -61,4 +61,14 @@ public class GigatronFiltersResultsPage extends BaseHelper
         System.out.println("Filter name is: " + filterName);
         return filterName.toLowerCase();
     }
+
+    public void clickOnIconBasket()
+    {
+
+        wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("fb-logo")));
+        wdWait.until(ExpectedConditions.invisibilityOfElementWithText(By.className("icon-number"),"1"));
+        WebElement iconBasket = driver.findElement(By.className("icon"));
+        js.executeScript("arguments[0].scrollIntoView();", iconBasket);
+        js.executeScript("arguments[0].click();", iconBasket);//iconBasket.click();
+    }
 }

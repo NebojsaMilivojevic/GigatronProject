@@ -24,20 +24,10 @@ public class GigatronBasketPage extends BaseHelper
     
     public void goToBasket ()
     {
-        clickOnIconBasket();
         clickOnContinueLikeUnregisteredBuyerButton();
         createListOfBasketItems();
     }
 
-    private void clickOnIconBasket()
-    {
-
-        wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("fb-logo")));
-        wdWait.until(ExpectedConditions.invisibilityOfElementWithText(By.className("icon-number"),"1"));
-        WebElement iconBasket = driver.findElement(By.className("icon"));
-        js.executeScript("arguments[0].scrollIntoView();", iconBasket);
-        js.executeScript("arguments[0].click();", iconBasket);//iconBasket.click();
-    }
 
     private void clickOnContinueLikeUnregisteredBuyerButton()
     {
@@ -123,7 +113,7 @@ public class GigatronBasketPage extends BaseHelper
         totalPriceText = totalPriceText.substring(0,totalPriceText.length()-7);
         totalPriceText = totalPriceText.replace(".","").trim();
         double totalPrice = Double.parseDouble(totalPriceText);
-        System.out.println("Total price after substring and replace is: " + totalPrice);
+        System.out.println("Total price in basket is: " + totalPrice);
         return totalPrice;
     }
 

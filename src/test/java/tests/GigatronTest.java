@@ -1,6 +1,7 @@
 package tests;
 
 
+import org.checkerframework.checker.units.qual.A;
 import org.junit.Assert;
 import org.junit.Test;
 import pages.*;
@@ -24,7 +25,7 @@ public class GigatronTest extends BaseTest
         GigatronItemPage itemPage = new GigatronItemPage(driver);
         itemPage.addItemToBasket();
 
-        Assert.assertTrue("Error !!!", itemPage.getIconBasketText().contains("1"));
+        Assert.assertTrue("Error !!!",itemPage.getAddToBasketButtonText().contains(itemPage.getIconBasketText()));
 
         Thread.sleep(4000); // added for presentation
     }
@@ -65,6 +66,8 @@ public class GigatronTest extends BaseTest
         filtersResultsPage.chooseRandomItem(); // choose second item
 
         itemPage.addItemToBasket();
+
+        filtersResultsPage.clickOnIconBasket();
 
         GigatronBasketPage basketPage = new GigatronBasketPage(driver);
         basketPage.goToBasket();

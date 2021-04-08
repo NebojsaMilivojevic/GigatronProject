@@ -53,6 +53,7 @@ public class GigatronItemPage extends BaseHelper
         System.out.println("Title name is: " + titleName);
         String[] arr = titleName.split(chosenItemName);
         String componentText = arr[0].toLowerCase();
+        System.out.println("Final chosen item name is: " + componentText + chosenItemName.toLowerCase() );
         return componentText + chosenItemName.toLowerCase();
     }
 
@@ -95,15 +96,23 @@ public class GigatronItemPage extends BaseHelper
         WebElement messageH4 = messageElement.findElement(By.xpath("h4[1]"));
         wdWait.until(ExpectedConditions.textToBePresentInElement(messageH4,"Proizvod je dodat u korpu"));
         String message = messageH4.getText();
-        System.out.println("Da li se pojavila poruka: "+ message);
+        System.out.println("Message after adding item in basket is: "+ message);
         wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("shop-buttons")));
         wdWait.until(ExpectedConditions.visibilityOfElementLocated(By.className("white")));
         WebElement nazadNaPretragu = driver.findElement(By.className("white"));
 
         wdWait.until(ExpectedConditions.textToBePresentInElementLocated(By.className("qty_cart_icon_number"),"1"));
-        wdWait.until(ExpectedConditions.textToBePresentInElementLocated(By.className("btnTxt"),"U korpi"));
+        wdWait.until(ExpectedConditions.textToBePresentInElement(addtoBasketButton,"U korpi"));
 
         js.executeScript("arguments[0].click();", nazadNaPretragu);
+    }
+
+    public String getAddToBasketButtonText ()
+    {
+        wdWait.until(ExpectedConditions.textToBePresentInElement(addtoBasketButton,"U korpi"));
+        String buttonText = addtoBasketButton.getText();
+        System.out.println("Text on add to basket button is: " + buttonText);
+        return buttonText;
     }
 
     public void navigateBack ()
