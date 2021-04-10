@@ -28,7 +28,7 @@ public class GigatronSelectItemsPage extends BaseHelper
         cookieButton();
         proizvodiButton();
         goToRacunariIKomponenteFirst();
-        selectGrafickeKarte();
+      //  selectGrafickeKarte();
     }
 
     private void navigateToGigatronHomePage()
@@ -55,11 +55,18 @@ public class GigatronSelectItemsPage extends BaseHelper
         act.moveToElement(racunariIKomponente).perform();
     }
 
-    private void selectGrafickeKarte ()
+    public void selectGrafickeKarte ()
     {
         wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("sub-menu")));
         WebElement grafickeKarte = driver.findElement(By.linkText("Grafičke karte"));
         grafickeKarte.click();
     }
 
+    public String getGrafickeKarteText ()
+    {
+        wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("sub-menu")));
+        WebElement grafickeKarte = driver.findElement(By.linkText("Grafičke karte"));
+        System.out.println("Graficke karte text is: " + grafickeKarte.getText());
+        return grafickeKarte.getText();
+    }
 }

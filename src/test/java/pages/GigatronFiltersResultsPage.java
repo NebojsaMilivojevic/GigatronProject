@@ -7,6 +7,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -14,7 +16,7 @@ public class GigatronFiltersResultsPage extends BaseHelper
 {
     WebDriver driver;
 
-    Random rnd = new Random();
+    List<String> itemNameList = new ArrayList<String>();
 
     public GigatronFiltersResultsPage (WebDriver driver)
     {
@@ -27,13 +29,22 @@ public class GigatronFiltersResultsPage extends BaseHelper
         wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("selected-filter-drop")));
         wdWait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.className("product-item-name")));
         List<WebElement> items = driver.findElements(By.className("product-item-name"));
+
         Random rnd = new Random();
         int randomNumber = rnd.nextInt(items.size());
-
         WebElement item = items.get(randomNumber);
-        js.executeScript("arguments[0].scrollIntoView();", item);
-        wdWait.until(ExpectedConditions.visibilityOf(item));
-        js.executeScript("arguments[0].click();", item); // item.click();
+
+        if (itemNameList.contains(item.getText()))
+        {
+            chooseRandomItem ();
+        } else {
+            itemNameList.add(item.getText());
+            js.executeScript("arguments[0].scrollIntoView();", item);
+            wdWait.until(ExpectedConditions.visibilityOf(item));
+            js.executeScript("arguments[0].click();", item); // item.click();
+
+
+        }
     }
 
     /*

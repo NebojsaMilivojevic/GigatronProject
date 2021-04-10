@@ -20,14 +20,22 @@ public class GigatronResultPage extends BaseHelper
 
     public void chooseItemFromSearchBox ()
     {
-        choseItem();
+        chooseItem();
     }
 
-    private void choseItem ()
+    private void chooseItem ()
     {
         wdWait.until(ExpectedConditions.presenceOfElementLocated(By.linkText("ASUS Gaming monitor TUF Gaming 27 VA - VG27VQ")));
         WebElement item = driver.findElement(By.linkText("ASUS Gaming monitor TUF Gaming 27 VA - VG27VQ"));
         item.click();
+    }
+
+    public String getItemName ()
+    {
+        wdWait.until(ExpectedConditions.presenceOfElementLocated(By.linkText("ASUS Gaming monitor TUF Gaming 27 VA - VG27VQ")));
+        WebElement itemName = driver.findElement(By.linkText("ASUS Gaming monitor TUF Gaming 27 VA - VG27VQ"));
+        System.out.println("Item name on result page is: " + itemName.getText());
+        return itemName.getText();
     }
 
 }

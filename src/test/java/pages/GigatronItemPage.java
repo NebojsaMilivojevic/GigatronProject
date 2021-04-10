@@ -74,8 +74,9 @@ public class GigatronItemPage extends BaseHelper
     */
     private void createListOfChosenItems()
     {
+        String itemName = getItemName();
         Item item = new Item();
-        item.setName(getItemName());
+        item.setName(itemName);
         item.setPrice(getItemPrice());
         System.out.println(item.getName() + " " + item.getPrice());
         chosenItems.add(item);
@@ -98,7 +99,8 @@ public class GigatronItemPage extends BaseHelper
         String message = messageH4.getText();
         System.out.println("Message after adding item in basket is: "+ message);
         wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("shop-buttons")));
-        wdWait.until(ExpectedConditions.visibilityOfElementLocated(By.className("white")));
+       // wdWait.until(ExpectedConditions.visibilityOfElementLocated(By.className("white")));
+        wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("white")));// zamenio 10.04.
         WebElement nazadNaPretragu = driver.findElement(By.className("white"));
 
         wdWait.until(ExpectedConditions.textToBePresentInElementLocated(By.className("qty_cart_icon_number"),"1"));

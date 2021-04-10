@@ -45,4 +45,12 @@ public class GigatronFiltersPage extends BaseHelper
         System.out.println("BrandAsusFilter after replace: " + brandAsusFilter);
         return brandAsusFilter.toLowerCase();
     }
+
+    public String getItemGroupName ()
+    {
+        wdWait.until(ExpectedConditions.textToBePresentInElementLocated(By.className("nav-title-grid"), "Grafičke karte"));
+        WebElement itemGroupName = driver.findElement(By.className("nav-title-grid"));
+        System.out.println("Item group name is: "+ itemGroupName.getText());
+        return itemGroupName.getText();
+    }
 }

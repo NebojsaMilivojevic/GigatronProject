@@ -13,13 +13,28 @@ public class GigatronTest extends BaseTest
     final String itemName1 = "ASUS Gaming monitor TUF Gaming 27 VA - VG27VQ";
 
     @Test
-    public void firstTest () throws InterruptedException
+    public void searchFunctionalityTest () throws InterruptedException
     {
 
         GigatronHomePage homePage = new GigatronHomePage(driver);
         homePage.gigatronSearch(itemName1);
 
         GigatronResultPage resultPage = new GigatronResultPage(driver);
+
+        Assert.assertEquals(itemName1, resultPage.getItemName());
+
+        Thread.sleep(4000); // added for presentation
+    }
+    @Test
+    public void addToBasketFunctionalityTest () throws InterruptedException
+    {
+
+        GigatronHomePage homePage = new GigatronHomePage(driver);
+        homePage.gigatronSearch(itemName1);
+
+        GigatronResultPage resultPage = new GigatronResultPage(driver);
+        Assert.assertEquals(itemName1, resultPage.getItemName());
+
         resultPage.chooseItemFromSearchBox();
 
         GigatronItemPage itemPage = new GigatronItemPage(driver);
@@ -31,12 +46,30 @@ public class GigatronTest extends BaseTest
     }
 
     @Test
-    public void secondTest () throws InterruptedException
+    public void selectItemsFunctionalityTest () throws InterruptedException
     {
         GigatronSelectItemsPage selectItemsPage = new GigatronSelectItemsPage(driver);
         selectItemsPage.selectGroupOfItems();
+        String grafickeKarteText  = selectItemsPage.getGrafickeKarteText();
 
         GigatronFiltersPage filtersPage = new GigatronFiltersPage(driver);
+
+        Assert.assertTrue(filtersPage.getItemGroupName().contains(grafickeKarteText));
+
+        Thread.sleep(4000); // added for presentation
+    }
+
+    @Test
+    public void filterFunctionalityTest () throws InterruptedException
+    {
+        GigatronSelectItemsPage selectItemsPage = new GigatronSelectItemsPage(driver);
+        selectItemsPage.selectGroupOfItems();
+        String grafickeKarteText  = selectItemsPage.getGrafickeKarteText();
+        selectItemsPage.selectGrafickeKarte();
+
+        GigatronFiltersPage filtersPage = new GigatronFiltersPage(driver);
+        Assert.assertTrue(filtersPage.getItemGroupName().contains(grafickeKarteText));
+
         filtersPage.filterSelectedItems();
 
         GigatronFiltersResultsPage filtersResultsPage = new GigatronFiltersResultsPage(driver);
@@ -47,15 +80,22 @@ public class GigatronTest extends BaseTest
     }
 
     @Test
-    public void thirdTest () throws InterruptedException
+    public void basketFunctionalityTest () throws InterruptedException
     {
         GigatronSelectItemsPage selectItemsPage = new GigatronSelectItemsPage(driver);
         selectItemsPage.selectGroupOfItems();
+        String grafickeKarteText  = selectItemsPage.getGrafickeKarteText();
+        selectItemsPage.selectGrafickeKarte();
 
         GigatronFiltersPage filtersPage = new GigatronFiltersPage(driver);
+        Assert.assertTrue(filtersPage.getItemGroupName().contains(grafickeKarteText));
+
         filtersPage.filterSelectedItems();
 
         GigatronFiltersResultsPage filtersResultsPage = new GigatronFiltersResultsPage(driver);
+
+        Assert.assertEquals(filtersPage.getFilterAsusName(),filtersResultsPage.getFilterNamePlusTextNumber());
+                                                                                                //assert
         filtersResultsPage.chooseRandomItem(); // choose first item
 
         GigatronItemPage itemPage = new GigatronItemPage(driver);
