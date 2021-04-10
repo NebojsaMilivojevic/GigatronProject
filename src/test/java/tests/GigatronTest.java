@@ -54,8 +54,7 @@ public class GigatronTest extends BaseTest
         selectItemsPage.selectGrafickeKarte();
 
         GigatronFiltersPage filtersPage = new GigatronFiltersPage(driver);
-        String itemGroupName = filtersPage.getItemGroupName();
-        Assert.assertTrue(itemGroupName.contains(grafickeKarteText));
+        Assert.assertTrue(filtersPage.getItemGroupName().contains(grafickeKarteText));
 
         Thread.sleep(4000); // added for presentation
     }
