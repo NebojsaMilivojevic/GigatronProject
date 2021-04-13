@@ -104,14 +104,14 @@ public class GigatronItemPage extends BaseHelper
         WebElement nazadNaPretragu = driver.findElement(By.className("white"));
 
         wdWait.until(ExpectedConditions.textToBePresentInElementLocated(By.className("qty_cart_icon_number"),"1"));
-        wdWait.until(ExpectedConditions.textToBePresentInElement(addtoBasketButton,"U korpi"));
+        wdWait.until(ExpectedConditions.textToBePresentInElement(addtoBasketButton,"U KORPI"));
 
         js.executeScript("arguments[0].click();", nazadNaPretragu);
     }
 
     public String getAddToBasketButtonText ()
     {
-        wdWait.until(ExpectedConditions.textToBePresentInElement(addtoBasketButton,"U korpi"));
+        wdWait.until(ExpectedConditions.textToBePresentInElement(addtoBasketButton,"U KORPI"));
         String buttonText = addtoBasketButton.getText();
         System.out.println("Text on add to basket button is: " + buttonText);
         return buttonText;
