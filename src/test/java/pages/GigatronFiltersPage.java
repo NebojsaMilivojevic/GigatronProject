@@ -28,7 +28,7 @@ public class GigatronFiltersPage extends BaseHelper
     {
         wdWait.until(ExpectedConditions.presenceOfElementLocated(By.id("brand")));
         List<WebElement> brands = driver.findElements(By.className("force-display"));
-        WebElement brandAsus = brands.get(0);
+        WebElement brandAsus = brands.get(1); // also replace number on 42. line in this class, most of the time Asus is on 0 (zero) position
         brandAsus.click();
     }
 
@@ -39,7 +39,7 @@ public class GigatronFiltersPage extends BaseHelper
     {
         wdWait.until(ExpectedConditions.presenceOfElementLocated(By.id("brand")));
         List<WebElement> brands = driver.findElements(By.className("force-display"));
-        WebElement brandAsus = brands.get(0);
+        WebElement brandAsus = brands.get(1); // line 31. in this class
         String brandAsusFilter = brandAsus.getText();
         brandAsusFilter = brandAsusFilter.replace("\n","").replace("(","").replace(")","").trim();
         System.out.println("BrandAsusFilter after replace: " + brandAsusFilter);

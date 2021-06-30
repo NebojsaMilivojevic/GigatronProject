@@ -41,7 +41,8 @@ public class GigatronHomePage extends BaseHelper
 
     private void cookieButton ()
     {
-        wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("btn"))).click();
+        wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("primary"))).click(); // btn - first className
+
     }
 
     private void enterTermInSearchBox (String term)

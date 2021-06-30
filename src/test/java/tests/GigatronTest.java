@@ -10,7 +10,7 @@ import java.util.List;
 
 public class GigatronTest extends BaseTest
 {
-    final String itemName1 = "ASUS Gaming monitor TUF Gaming 27 VA - VG27VQ";
+    final String itemName1 = "ASUS LED VG278QR";
 
     @Test
     public void searchFunctionalityTest () throws InterruptedException

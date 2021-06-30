@@ -38,7 +38,7 @@ public class GigatronSelectItemsPage extends BaseHelper
 
     private void cookieButton ()
     {
-        wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("btn"))).click();
+        wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("primary"))).click();
     }
 
     private void proizvodiButton ()

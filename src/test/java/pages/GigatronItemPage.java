@@ -59,9 +59,9 @@ public class GigatronItemPage extends BaseHelper
 
     private double getItemPrice ()
     {
-        WebElement priceHolder = driver.findElement(By.className("price"));
+        WebElement priceHolder = driver.findElement(By.className("ppra_price-number")); // price - first className
         String chosenItemPrice = priceHolder.getText();
-        chosenItemPrice = chosenItemPrice.substring(0,chosenItemPrice.length()-3);
+       // chosenItemPrice = chosenItemPrice.substring(0,chosenItemPrice.length()-3); // price do not have RSD
         chosenItemPrice = chosenItemPrice.replace(".","");
         double priceOfChosenItem = Double.parseDouble(chosenItemPrice);
         System.out.println("Chosen item price is: " + priceOfChosenItem);
