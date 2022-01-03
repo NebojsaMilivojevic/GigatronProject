@@ -25,9 +25,10 @@ public class GigatronResultPage extends BaseHelper
 
     private void chooseItem ()
     {
-        wdWait.until(ExpectedConditions.presenceOfElementLocated(By.linkText("ASUS LED VG278QR")));
-        WebElement item = driver.findElement(By.linkText("ASUS LED VG278QR"));
+      WebElement item =  wdWait.until(ExpectedConditions.presenceOfElementLocated(By.linkText("ASUS LED VG278QR")));
+        //WebElement item = driver.findElement(By.linkText("ASUS LED VG278QR"));
         item.click();
+
     }
 
     public String getItemName ()

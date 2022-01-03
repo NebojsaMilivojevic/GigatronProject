@@ -1,9 +1,12 @@
 package pages;
 
+import helpers.BaseHelper;
+
 public class Item implements Comparable<Item>
 {
     private String name;
     private double price;
+
 
     public String getName()
     {
@@ -24,7 +27,6 @@ public class Item implements Comparable<Item>
     {
         return price;
     }
-
 
     public int compareTo(Item item)
     {

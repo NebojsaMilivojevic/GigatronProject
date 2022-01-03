@@ -8,12 +8,17 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class BaseHelper
 {
+   public   int brojBaseHelper = 10;
+    protected  String imeBaseHelper = "Nebo";
+    int broj1BaseHelper = 101;
+   private String ime1BaseHelper = "Nebo1";
+
     protected static WebDriver driver = new ChromeDriver();
-    protected static WebDriverWait wdWait = new WebDriverWait(driver, 40);
+    protected  WebDriverWait wdWait = new WebDriverWait(driver, 40);
 
     protected static JavascriptExecutor js = (JavascriptExecutor) driver;
 
-    public static void clickOnElement (WebElement element)
+    protected  void clickOnElement (WebElement element)
     {
         element.click();
     }

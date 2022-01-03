@@ -45,6 +45,7 @@ public class GigatronSelectItemsPage extends BaseHelper
     {
         wdWait.until(ExpectedConditions.visibilityOf(megaButton));
         megaButton.click();
+        //clickOnElement(megaButton); // metoda iz BaseHelper-a
     }
 
     private void goToRacunariIKomponenteFirst ()
@@ -69,4 +70,6 @@ public class GigatronSelectItemsPage extends BaseHelper
         System.out.println("Graficke karte text is: " + grafickeKarte.getText());
         return grafickeKarte.getText();
     }
+
+
 }

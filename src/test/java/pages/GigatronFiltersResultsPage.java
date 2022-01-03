@@ -23,6 +23,7 @@ public class GigatronFiltersResultsPage extends BaseHelper
     {
         this.driver = driver;
         PageFactory.initElements (driver, this);
+
     }
 
     public void chooseRandomItem ()
@@ -54,8 +55,8 @@ public class GigatronFiltersResultsPage extends BaseHelper
     public String getTextNumberOfItems ()
     {
         wdWait.until(ExpectedConditions.numberOfElementsToBe(By.className("selected-filter-drop"),1));
-        wdWait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.className("product-item-name")));
-        List<WebElement> itemsResult = driver.findElements(By.className("product-item-name"));
+        wdWait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.className("product-item-name"))); // product-box-gallery
+        List<WebElement> itemsResult = driver.findElements(By.className("product-item-name")); // product-box-gallery
         int itemsNumber = itemsResult.size();
         System.out.println("Number of items on filter results page is: " + itemsNumber);
         return String.valueOf(itemsNumber);

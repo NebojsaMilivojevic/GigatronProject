@@ -16,7 +16,10 @@ public class BaseTest extends BaseHelper
     @After
     public void testTearDown()
     {
+
         driver.close();
         driver.quit();
     }
+
+
 }
