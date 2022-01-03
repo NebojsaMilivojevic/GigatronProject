@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class BaseHelper
 {
    public   int brojBaseHelper = 10;
+   
     protected  String imeBaseHelper = "Nebo";
     int broj1BaseHelper = 101;
    private String ime1BaseHelper = "Nebo1";
